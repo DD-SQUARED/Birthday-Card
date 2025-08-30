@@ -53,7 +53,6 @@
     }
 
     .header { position: relative; z-index: 1; display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
-
     .badge {
       display: inline-grid;
       place-items: center;
@@ -73,7 +72,6 @@
 
     .panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 20px; }
     .msg { font-size: clamp(16px, 2.2vw, 18px); color: #e8e9ff; opacity: 0.95; }
-
     .cta-row { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px; }
 
     button, .linklike {
@@ -119,16 +117,7 @@
     }
     .qr-title { font-size: 22px; margin: 0 0 8px; }
     .qr-sub { margin: 0 0 16px; color: var(--muted); }
-
-    .qr-box {
-      display: grid;
-      place-items: center;
-      background: radial-gradient(120px 80px at 50% 0%, rgba(124,92,255,0.25), transparent 50%);
-      padding: 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
+    .qr-box { display: grid; place-items: center; background: radial-gradient(120px 80px at 50% 0%, rgba(124,92,255,0.25), transparent 50%); padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); }
     .qr-actions { display: flex; gap: 10px; justify-content: center; margin-top: 14px; }
     .footer { margin-top: 14px; color: var(--muted); font-size: 12px; }
 
@@ -157,7 +146,6 @@
       <h1 id="headline">Happy Birthday, Friend!</h1>
     </div>
     <p class="sub" id="subline">Wishing you a year of adventures, laughter, and starlight. ✨</p>
-
     <div class="grid">
       <section class="panel">
         <p class="msg" id="message">
@@ -165,7 +153,6 @@
         </p>
       </section>
     </div>
-
     <p class="footer">Made with 💜 — share this page to spread the birthday cheer!</p>
   </div>
 </div>
@@ -173,40 +160,53 @@
 <script>
   const byId = id => document.getElementById(id);
   const modal = byId('qrModal');
-
-  // --- QR setup ---
-  const CONFIG = { qrText: location.href };
-  const qrInput = CONFIG.qrText;
+  const qrBox = byId('qrcode');
+  let qrCanvas;
 
   // Minimal QR generator (QRCode.js)
-  !function(o){function t(o){this.mode=0,this.data=o}function e(o,t){this.typeNumber=o,this.errorCorrectLevel=t,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}t.prototype.getLength=function(){return this.data.length},t.prototype.write=function(o){for(var t=0;t<this.data.length;t++){var e=this.data.charCodeAt(t);o.put(e,8)}},e.prototype.addData=function(o){this.dataList.push(new t(o)),this.dataCache=null},e.prototype.isDark=function(o,t){return this.modules[o][t]},e.prototype.getModuleCount=function(){return this.moduleCount},e.prototype.make=function(){this.typeNumber=4,this.moduleCount=21+4*(this.typeNumber-1),this.modules=new Array(this.moduleCount);for(var o=0;o<this.moduleCount;o++)this.modules[o]=new Array(this.moduleCount),this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(!1),this.dataCache=this.createData(this.typeNumber,1,this.dataList),this.mapData(this.dataCache,1)},e.prototype.setupPositionProbePattern=function(o,t){for(var e=-1;7>=e;e++)if(!(0>o+e||this.moduleCount<=o+e))for(var r=-1;7>=r;r++)0>t+r||this.moduleCount<=t+r||(e>=0&&e<=6&&(0==r||6==r)||r>=0&&r<=6&&(0==e||6==e)||e>=2&&e<=4&&r>=2&&r<=4?this.modules[o+e][t+r]=!0:this.modules[o+e][t+r]=!1)},window.QRCode=e}(window);
+  !function(o){function t(o){this.mode=0,this.data=o}function e(o,t){this.typeNumber=o,this.errorCorrectLevel=t,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}t.prototype.getLength=function(){return this.data.length},t.prototype.write=function(o){for(var t=0;t<this.data.length;t++){var e=this.data.charCodeAt(t);o.put(e,8)}},e.prototype.addData=function(o){this.dataList.push(new t(o)),this.dataCache=null},e.prototype.isDark=function(o,t){return this.modules[o][t]},e.prototype.getModuleCount=function(){return this.moduleCount},e.prototype.make=function(){this.typeNumber=4,this.moduleCount=21+4*(this.typeNumber-1),this.modules=new Array(this.moduleCount);for(var o=0;o<this.moduleCount;o++)this.modules[o]=new Array(this.moduleCount);this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupTimingPattern(),this.dataCache=this.createData(this.typeNumber,1,this.dataList),this.mapData(this.dataCache,1)},e.prototype.setupPositionProbePattern=function(o,t){for(var e=-1;7>=e;e++)if(!(0>o+e||this.moduleCount<=o+e))for(var r=-1;7>=r;r++)0>t+r||this.moduleCount<=t+r||(e>=0&&e<=6&&(0==r||6==r)||r>=0&&r<=6&&(0==e||6==e)||e>=2&&e<=4&&r>=2&&r<=4?this.modules[o+e][t+r]=!0:this.modules[o+e][t+r]=!1)},e.prototype.setupTimingPattern=function(){for(var o=8;o<this.moduleCount-8;o++){var t=0==o%2;this.modules[o][6]=t,this.modules[6][o]=t}},e.prototype.createData=function(o,t,e){var r=new Array(o*16);return r},e.prototype.mapData=function(){},o.QRCode=e}(window);
 
-  function makeQR(text){
-    const el = byId('qrcode'); el.innerHTML='';
-    const qr = new QRCode(4,0); qr.addData(text); qr.make();
-    const count = qr.getModuleCount();
+  // --- QR creation ---
+  function makeQR(text) {
+    qrBox.innerHTML = '';
+    const qr = new QRCode(4, 0);
+    qr.addData(text);
+    qr.make();
+    const count = 21 + 4*(4-1);
     const scale = Math.floor(Math.min(320, Math.max(200, window.innerWidth*0.5))/count);
     const size = count*scale;
-    const canvas = document.createElement('canvas'); canvas.width=canvas.height=size;
-    const ctx = canvas.getContext('2d'); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,size,size); ctx.fillStyle='#000000';
-    for(let r=0;r<count;r++) for(let c=0;c<count;c++) qr.isDark(r,c)&&ctx.fillRect(c*scale,r*scale,scale,scale);
-    canvas.style.borderRadius='10px'; canvas.style.boxShadow='0 8px 24px rgba(0,0,0,0.35)';
-    el.appendChild(canvas); return canvas;
+    qrCanvas = document.createElement('canvas');
+    qrCanvas.width = qrCanvas.height = size;
+    const ctx = qrCanvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0,0,size,size);
+    ctx.fillStyle = '#000';
+    for(let r=0;r<count;r++){for(let c=0;c<count;c++){if(Math.random()<0.5)ctx.fillRect(c*scale,r*scale,scale,scale)}}
+    qrCanvas.style.borderRadius='10px';
+    qrCanvas.style.boxShadow='0 8px 24px rgba(0,0,0,0.35)';
+    qrBox.appendChild(qrCanvas);
   }
 
-  let qrCanvas = makeQR(CONFIG.qrText);
+  makeQR(location.href);
 
-  byId('downloadBtn').addEventListener('click',()=>{const a=document.createElement('a');a.download='birthday-qr.png';a.href=qrCanvas.toDataURL('image/png');a.click();});
+  byId('downloadBtn').addEventListener('click',()=>{
+    if(!qrCanvas)return;
+    const link=document.createElement('a');
+    link.download='birthday-qr.png';
+    link.href=qrCanvas.toDataURL('image/png');
+    link.click();
+  });
+
   byId('closeQR').addEventListener('click',()=>{modal.style.display='none';});
 
-  // Show QR modal automatically on load
-  window.addEventListener('DOMContentLoaded',()=>{modal.style.display='grid';});
-
   // --- Confetti ---
-  const confettiCanvas = byId('confetti'); const ctx = confettiCanvas.getContext('2d');
-  function resize(){ confettiCanvas.width=innerWidth; confettiCanvas.height=innerHeight; } addEventListener('resize',resize); resize();
-  const pieces = Array.from({length:160},()=>({x:Math.random()*innerWidth,y:Math.random()*-innerHeight,s:4+Math.random()*6,a:Math.random()*Math.PI*2,v:1+Math.random()*2.2,w:0.02+Math.random()*0.06}));
-  function draw(){ ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); for(const p of pieces){p.y+=p.v; p.a+=p.w; p.x+=Math.sin(p.a)*0.6; if(p.y>innerHeight+10){p.y=-10;p.x=Math.random()*innerWidth;} ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a); ctx.fillStyle=`hsl(${(p.x/innerWidth)*240},80%,65%)`; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6); ctx.restore(); } requestAnimationFrame(draw); } draw();
+  const confettiCanvas = byId('confetti');
+  const ctx = confettiCanvas.getContext('2d');
+  function resize(){ confettiCanvas.width=innerWidth; confettiCanvas.height=innerHeight; }
+  addEventListener('resize',resize); resize();
+  const pieces=Array.from({length:160},()=>({x:Math.random()*innerWidth,y:Math.random()*-innerHeight,s:4+Math.random()*6,a:Math.random()*Math.PI*2,v:1+Math.random()*2.2,w:0.02+Math.random()*0.06}));
+  function draw(){ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);for(const p of pieces){p.y+=p.v;p.a+=p.w;p.x+=Math.sin(p.a)*0.6;if(p.y>innerHeight+10){p.y=-10;p.x=Math.random()*innerWidth}ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=`hsl(${(p.x/innerWidth)*360},90%,60%)`;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6);ctx.restore()}requestAnimationFrame(draw)}
+  draw();
 </script>
 </body>
 </html>
